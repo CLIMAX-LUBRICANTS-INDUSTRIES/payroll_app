@@ -51,6 +51,7 @@ function Layout() {
                     <img src={user} alt='user' className='w-16 h-auto rounded-full object-cover' />
                     <div>
                         <p className='text-sm font-bold'>Isaac Johnson</p>
+                        <p className='text-sm font-bold'>lazyBurger@climaxlubs.com</p>
                         <p className='text-[12px] text-gray-500'>Super Admin</p>
                     </div>
                 </div>
