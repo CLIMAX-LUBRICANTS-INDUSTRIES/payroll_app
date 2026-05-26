@@ -15,3 +15,8 @@
   --color-clx-red: #ec1c24;
   --color-dblack: #1a1c1e;
 }
+
+@utility flex-stack {
+  display: flex;
+  flex-direction: column;
+}
