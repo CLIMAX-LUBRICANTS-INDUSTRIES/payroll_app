@@ -1,15 +1,17 @@
 import { LayoutDashboard, PieChart, ReceiptText, Users } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.png';
+import { motion } from 'framer-motion';
 
 function Sidebar() {
-    const baseLinkStyle = "flex items-center gap-3 px-4 py-3 rounded-sm transition-all duration-150";
-    const activeStyle = "bg-clx-green text-white font-bold shadow-md scale-105 tracking-wide";
-    const inactiveStyle = "text-gray-700 hover:text-gray-900 hover:scale-105 font-semibold tracking-wide";
+    const MotionNavLink = motion.create(NavLink);
+    const baseLinkStyle = "active:scale-95 transition-transform duration-500 ease-spring-snappy flex items-center gap-2 px-8 py-3 font-montserrat font-medium text-sm tracking-wide";
+    const activeStyle = "flex items-center gap-2 bg-clx-green hover:bg-clx-green2 hover:scale-105 w-full px-8 py-3 text-white rounded-sm";
+    const inactiveStyle = "text-gray-700 hover:text-gray-900 hover:scale-105 font-semibold";
 
     return (
         <aside>
-            <div className='fixed w-64 h-[90vh] p-6 bg-white flex-stack rounded-sm z-20 gap-6'>
+            <div className='fixed w-64 h-[90vh] p-6 bg-white flex-stack rounded-3xl shadow-2xl z-20 gap-6'>
                 {/*logo*/}
                 <div className='flex justify-center'>
                     <img 
@@ -20,12 +22,9 @@ function Sidebar() {
 
                 {/*general*/}
                 <div className='flex-stack gap-4'>
-                    <h1 className='text-[10px] font-medium tracking-widest text-black/30 cursor-pointer'>GENERAL</h1>
-                    <NavLink 
-                        to={'/dashboard'} 
-                        className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
-                        <LayoutDashboard size={16} />
-                        <h1>Dashboard</h1>
+                    <h1 className='text-[10px] font-medium tracking-widest text-black/30'>GENERAL</h1>
+                    <NavLink to={'/dashboard'} className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
+                        <LayoutDashboard size={16}/>Dashboard
                     </NavLink>
                 </div>
                 
@@ -35,12 +34,13 @@ function Sidebar() {
                 <div className='flex-stack gap-4'>
                     <h1 className='text-[10px] font-medium tracking-widest text-black/30'>ORGANIZATION</h1>
                     {/*payroll*/}                   
-                    <NavLink
+                    <MotionNavLink
                         to={'/payroll'}
+                        whileTap={{ scale: 0.92 }}
                         className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
                             <ReceiptText size={16} />
                             <h1>Payroll</h1>
-                    </NavLink>
+                    </MotionNavLink>
                         
                     {/*reports*/}
                     <NavLink

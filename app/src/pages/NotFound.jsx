@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
+import AnimatedButton from "../components/AnimatedButton";
 
 function NotFound() {
     return(
-        <div className="min-h-screen bg-gray-800 flex flex-col gap-4 justify-center items-center font-montserrat">
-            <div className="max-w-md flex flex-col gap-4">
-                <p className="text-9xl font-black text-white/40 text-center tracking-wide">404</p>
+        <div className="min-h-screen bg-clx-green flex flex-col gap-4 justify-center items-center font-montserrat">
+            <div className="max-w-md flex flex-col gap-4 text-center">
+                <p className="text-8xl font-sans font-black text-white/80 ">404</p>
                 <p className=" text-3xl text-gray-50 italic">Oops, Page Not Found...</p>
                 <Link to={'/'}>
-                    <button className="p-4 bg-gray-50 hover:bg-gray-300 rounded-sm w-full text-lg cursor-pointer transition">Go to Payroll</button>
+                    <AnimatedButton style={"gap-2 bg-white hover:bg-gray-200 px-8 py-3 text-black font-montserrat font-medium text-base rounded-sm w-full transition-colors"}>Go to Payroll</AnimatedButton>
                 </Link>
             </div>
         </div>
