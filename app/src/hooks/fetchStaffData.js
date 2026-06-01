@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import supabase from '../utils/supabaseclient.js';
 
-export function useDataFetcher() {
+export const useDataFetcher = () => {
     const [records, setRecords] = useState([]);
 
     const fetchUserData = async () => {

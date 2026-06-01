@@ -1,72 +1,16 @@
 import { CheckCircle2, FileText, Upload, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import AnimatedButton from "./AnimatedButton";
-import Papa from 'papaparse';
 
 function AnimatedUploadModal({ closeModal }) {
-    const [files, setFiles] = useState([])
-    const [error, setError] = useState('')
-    const [headers, setHeaders] = useState([])
-    const [CSVData, setCSVData] = useState([])
-
     const activeStyle = "w-full mt-3 py-4 rounded-xl font-montserrat font-semibold flex items-center justify-center gap-2 bg-clx-green text-white tracking-widest hover:bg-clx-green2 transition-colors shadow-lg shadow-yellow-500/20";
-
-
-    useEffect(() => {
-        if (!error) return;
-        const timer = setTimeout(() => {
-            setError('');
-        }, 3000)
-
-        return () => clearTimeout(timer)
-    }, [error])
-
-    const handleFileUpload = (e) => {
-        // handling fetching files
-        const selectedFiles = Array.from(e.target.files);
-        
-        selectedFiles.forEach((file) => { console.log(file)})
-        // handling errors
-        if (selectedFiles === 0) {
-            setError(`No file selected`);
-            return;
-        }
-
-        const hasInvalidFile = selectedFiles.some(file => {
-            return file.type !== 'text/csv' && !file.name.endsWith('.csv');
-        })
-
-        if (hasInvalidFile) {
-            setError(`Please Upload valid CSV files only`);
-            return;
-        }
-
-        setError('')
-        setFiles((prev) => [...prev, ...selectedFiles])
-
-        Papa.parse(selectedFiles, {
-            header: true,
-            skipEmptyLines: true,
-            complete: (results) => {
-                if (results.data.length === 0) {
-                    setError(`The CSV file is empty`)
-                } else {
-                    console.log(results)
-                    setHeaders(Object.keys(results.data[0]))
-                    setCSVData(results.data)
-                }
-            }
-        })
-    }
-
 
     return (
         <AnimatePresence>
             <motion.div
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.1 }} 
+                transition={{ duration: 0.4, ease:'easeInOut' }} 
                 exit={{ opacity: 0, scale: 0.9, y: 20, duration: 5 }}
                 onClick={() => closeModal(false)}
                 className="ease-spring-soft fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg p-4">
@@ -147,7 +91,9 @@ function AnimatedUploadModal({ closeModal }) {
                                 <AnimatedButton 
                                     stiffness={'800'}
                                     damping={'60'}
-                                    style={`${activeStyle}`}>Run Payroll</AnimatedButton>
+                                    style={`${activeStyle}`}
+                                >Run Payroll
+                                </AnimatedButton>
                             )}
                         </div>
                     </div>
