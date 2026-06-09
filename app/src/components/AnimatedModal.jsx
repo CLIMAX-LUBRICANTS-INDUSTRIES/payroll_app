@@ -1,33 +1,48 @@
 import { CheckCircle2, FileText, Upload, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, scale } from "framer-motion";
 import AnimatedButton from "./AnimatedButton";
+import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
 
 function AnimatedUploadModal({ closeModal }) {
-    const activeStyle = "w-full mt-3 py-4 rounded-xl font-montserrat font-semibold flex items-center justify-center gap-2 bg-clx-green text-white tracking-widest hover:bg-clx-green2 transition-colors shadow-lg shadow-yellow-500/20";
 
+    const activeStyle = "w-full mt-3 py-4 rounded-xl font-montserrat font-semibold bg-clx-green text-white tracking-widest hover:bg-clx-green2 transition-colors shadow-lg";
+    const { 
+            files, 
+            message, 
+            CSVData, 
+            isUploading, 
+            numberOfRows, 
+            handleFiles, 
+            uploadFiles 
+        } = useOutletContext();
+    
+    useEffect(() => {
+        console.log("Modal viewing shared CSVData:", CSVData)
+    }, [CSVData])
+    
     return (
         <AnimatePresence>
             <motion.div
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.4, ease:'easeInOut' }} 
-                exit={{ opacity: 0, scale: 0.9, y: 20, duration: 5 }}
+                transition={{ duration: 0.2, ease:'easeInOut' }}
+                exit={{ opacity: 0 }}
                 onClick={() => closeModal(false)}
-                className="ease-spring-soft fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg p-4">
+                className="ease-spring-soft fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xl p-4">
 
                 <AnimatePresence>
-                    {error && 
+                    {message && 
                             <motion.div
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 onClick={(e) => e.stopPropagation()} 
-                                className="fixed top-0 bg-white rounded-xl px-6 py-4 mt-4 z-50 shadow-lg">
-                                <h1 className="text-red-500 font-semibold font-sm font-montserrat">{error}</h1>
+                                className={`fixed top-0 bg-white rounded-xl px-6 py-4 mt-4 z-50 shadow-lg ${message.type === 'error' ? 'text-red-500 font-semibold font-sm font-montserrat' : 'text-clx-green font-semibold font-sm font-montserrat'}`}>
+                                {message.text}
                             </motion.div>
                     }
                 </AnimatePresence>
-                
 
                 <motion.div
                     initial={{ scale: "90%" }} 
@@ -47,24 +62,22 @@ function AnimatedUploadModal({ closeModal }) {
 
                     {/*main*/}
                     <div>
-                        <div className="border-2 border-dashed border-clx-green/50 rounded-xl p-10 flex flex-col items-center justify-center  transition-colors group cursor-pointer relative">
+                        <div className="border-2 border-dashed border-clx-green/50 rounded-xl p-10 flex flex-col items-center justify-center  transition-colors group cursor-pointer relative font-montserrat">
                             <input
                                 type="file"
                                 multiple
                                 accept=".csv"
-                                onChange={(e) => handleFileUpload(e)} 
+                                onChange={(e) => handleFiles(e)} 
                                 className="absolute inset-0 opacity-0 cursor-pointer" />
-                            <motion.div
-                                whileHover={{ scale: 1.05 }} 
-                                className="p-4 bg-clx-green/10 rounded-full mb-4">
+                            <div className="p-4 bg-clx-green/10 rounded-full mb-4">
                                 <Upload className="text-clx-green" size={32} />
-                            </motion.div>
-                            <p className="text-black font-medium">Click or drag CSV files here</p>
+                            </div>
+                            <p className="text-black font-medium text-base">Click or drag CSV files here</p>
                             <p className="text-gray-500 text-sm">Upload departmental work logs</p>
                         </div>
                         <div className="mt-4">
-                            <p className="text-sm text-clx-green font-bold uppercase tracking-wider mb-2">
-                                {files.length} Files Selected
+                            <p className="text-sm text-clx-green font-semibold font-montserrat uppercase tracking-wider mb-2">
+                                {files.length} Files Selected, {numberOfRows} Rows selected
                             </p>
                         </div>
                         <div className="scrollbar-none border-2 border-dashed border-clx-green/50 rounded-xl px-2 py-2 mt-4 overflow-auto space-y-2 max-h-[20vh]">
@@ -88,7 +101,9 @@ function AnimatedUploadModal({ closeModal }) {
                         </div>
                         <div>
                             {files.length > 0 && (
-                                <AnimatedButton 
+                                <AnimatedButton
+                                    whileHover={{ scale: 1.01 }}
+                                    onClickFunction={uploadFiles} 
                                     stiffness={'800'}
                                     damping={'60'}
                                     style={`${activeStyle}`}

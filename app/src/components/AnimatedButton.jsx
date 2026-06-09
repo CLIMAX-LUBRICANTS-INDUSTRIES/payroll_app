@@ -5,12 +5,13 @@ function AnimatedButton({
     stiffness = 300,
     damping = 15,
     style,
-    onClickFunction
+    onClickFunction,
+    whileHover
 }) {
     return (
         <motion.button
             onClick={onClickFunction}
-            whileHover={{ scale: 1.05 }}
+            whileHover={whileHover}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.1, type: 'spring', stiffness, damping }}
             className={style}

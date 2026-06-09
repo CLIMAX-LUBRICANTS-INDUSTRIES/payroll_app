@@ -3,12 +3,13 @@ import supabase from '../utils/supabaseclient.js';
 
 export const useDataFetcher = () => {
     const [records, setRecords] = useState([]);
+    const [error, setError] = useState([])
 
     const fetchUserData = async () => {
-        const { data, error } = await supabase.from('Staffs').select('id, full_name, fixed_salary');
+        const { data, error } = await supabase.from('staffs').select('UserID, Name, Department, Position, BaseSalary');
 
         if (error) {
-            alert(`Error fetching data: ${error.message}`)
+            setError(error.message)
         } else {
             setRecords(data)
         }
@@ -18,5 +19,5 @@ export const useDataFetcher = () => {
         fetchUserData();
     }, []);
 
-    return { records };
+    return { records, error };
 }
