@@ -1,67 +1,57 @@
-import { LayoutDashboard, PieChart, ReceiptText, Users } from 'lucide-react';
+import { LayoutDashboard, LogOut, PieChart, ReceiptText, Users } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.png';
-import { motion } from 'framer-motion';
 
 function Sidebar() {
-    const MotionNavLink = motion.create(NavLink);
-    const baseLinkStyle = "active:scale-95 transition-transform duration-500 ease-spring-snappy flex items-center gap-2 px-8 py-3 font-montserrat font-medium text-sm tracking-wide";
-    const activeStyle = "flex items-center gap-2 bg-clx-green hover:bg-clx-green2 hover:scale-105 w-full px-8 py-3 text-white rounded-sm";
-    const inactiveStyle = "text-gray-700 hover:text-gray-900 hover:scale-105 font-semibold";
+    const navItems = [
+        { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard'},
+        { id: 'payroll', name: 'Payroll', icon: ReceiptText, path: '/payroll'},
+        { id: 'staffs', name: 'Staffs', icon: Users, path: '/staffs'},
+        { id: 'reports', name: 'Reports', icon: PieChart, path: '/reports'},
+    ];
+
+    const baseLinkStyle = "flex items-center gap-1.5 px-8 py-3 w-full text-slate-800 text-sm transition-all";
+    const activeStyle = "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-sm shadow-emerald-800 shadow";
+    const inactiveStyle = "hover:text-gray-900 font-semibold font-medium";
 
     return (
-        <aside>
-            <div className='fixed w-64 h-[90vh] p-6 bg-white flex-stack rounded-3xl shadow-2xl z-20 gap-6'>
-                {/*logo*/}
-                <div className='flex justify-center'>
-                    <img 
+        <aside className='w-65 h-full p-5 flex-stack gap-6 select-none shrink-0'>
+            {/*logo*/}
+            <div className='flex justify-center py-3'>
+                <a href='https://www.climaxlubs.com'>
+                    <img
                         src={logo} 
                         className='h-12' 
-                        alt='logo'/>
-                </div>
+                        alt='logo'
+                    />
+                </a>
+            </div>
 
-                {/*general*/}
-                <div className='flex-stack gap-4'>
-                    <h1 className='text-[10px] font-medium tracking-widest text-black/30'>GENERAL</h1>
-                    <NavLink to={'/dashboard'} className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
-                        <LayoutDashboard size={16}/>Dashboard
-                    </NavLink>
+            {/*general*/}
+            <div className='flex-stack gap-3.5'>
+                <hr className="border-t border-slate-200 mb-4.5" />
+                <h1 className='text-[10px] font-semibold text-slate-400 tracking-wider uppercase'>Organization</h1>
+                {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                        <NavLink 
+                            key={item.id}
+                            to={item.path}
+                            className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}
+                        >
+                            <Icon size={15} strokeWidth={2.5}/>
+                            <span>{item.name}</span>
+                        </NavLink>
+                    )
+                })}
+            </div>
+            
+            <div className='border-t border-slate-200 mt-auto pt-4 flex-stack items-center gap-3 px-8 py-3 cursor-pointer'>
+                <div className="font-medium text-red-600 flex items-center gap-1.5">
+                    <LogOut size={15}/>
+                    <h1 className='text-xs'>Log Out</h1>
                 </div>
-                
-                <hr className='border-t border-black/30' />
-
-                {/*organization*/}
-                <div className='flex-stack gap-4'>
-                    <h1 className='text-[10px] font-medium tracking-widest text-black/30'>ORGANIZATION</h1>
-                    {/*payroll*/}                   
-                    <MotionNavLink
-                        to={'/payroll'}
-                        whileTap={{ scale: 0.92 }}
-                        className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
-                            <ReceiptText size={16} />
-                            <h1>Payroll</h1>
-                    </MotionNavLink>
-                        
-                    {/*reports*/}
-                    <NavLink
-                        to={'/reports'}
-                        className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
-                            <PieChart size={16} />
-                            <h1>Reports</h1>
-                    </NavLink>
-
-                    {/*staffs*/}
-                    <NavLink
-                        to={'/staffs'}
-                        className={({ isActive }) => `${baseLinkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
-                            <Users size={16} />
-                            <h1>Staffs</h1>
-                    </NavLink>
-                </div>
-
-                <div className='border-t border-black/30 mt-auto pt-4 flex-stack gap-2'>
-                    <h1 className='text-center text-black/70 font-montserrat text-sm'>© 2026 CLX</h1>
-                </div>
+                <h1 className='text-center text-slate-400 text-sm'>©  <span className='text-xs tracking-tight'>2026 Climax Lubricants Industries</span></h1>
             </div>
         </aside>
     )

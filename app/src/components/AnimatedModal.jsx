@@ -17,9 +17,6 @@ function AnimatedUploadModal({ closeModal }) {
             uploadFiles 
         } = useOutletContext();
     
-    useEffect(() => {
-        console.log("Modal viewing shared CSVData:", CSVData)
-    }, [CSVData])
     
     return (
         <AnimatePresence>

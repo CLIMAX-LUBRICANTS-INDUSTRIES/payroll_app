@@ -6,16 +6,10 @@ function MainLayout() {
     const payroll = PayrollProcessor();
 
     return (
-        <div className="min-h-screen bg-[url(./assets/bg3.jpg)] bg-cover bg-center bg-fixed">
-            <main className="flex-1 overflow-y-auto">
-                <div className="container mx-auto p-6 mt-8">
-                    <Sidebar />
-                    <div className="ml-66">
-                        <Outlet context={payroll}/>
-                    </div>
-                </div>
-            </main>
-        </div>
+        <main className="flex w-screen h-screen overflow-hidden bg-slate-100 font-sans antialiased text-slate-800">
+            <Sidebar />
+            <Outlet context={payroll}/> 
+        </main>
     );
 }
 

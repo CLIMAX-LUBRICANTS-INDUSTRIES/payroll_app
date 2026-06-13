@@ -3,7 +3,7 @@ import supabase from '../utils/supabaseclient.js';
 
 export const useDataFetcher = () => {
     const [records, setRecords] = useState([]);
-    const [error, setError] = useState([])
+    const [error, setError] = useState(null)
 
     const fetchUserData = async () => {
         const { data, error } = await supabase.from('staffs').select('UserID, Name, Department, Position, BaseSalary');
@@ -19,5 +19,7 @@ export const useDataFetcher = () => {
         fetchUserData();
     }, []);
 
-    return { records, error };
+    const totalEmployees = records.length;
+
+    return { records, error, totalEmployees };
 }
