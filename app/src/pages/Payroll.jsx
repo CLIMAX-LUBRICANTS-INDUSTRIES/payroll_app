@@ -129,7 +129,7 @@ function Payroll() {
                             This Month's Payroll
                         </p>
                         {/* Circular Icon Container */}
-                        <span className="text-slate-700 flex items-center rounded-full bg-slate-200 p-1 justify-center">
+                        <span className="text-slate-700 flex items-center justify-center">
                             <img src={naira} alt="naira" className="h-4" />
                         </span>
                     </div>
@@ -147,7 +147,7 @@ function Payroll() {
                             Deductions Applied
                         </p>
                         {/* Circular Icon Container */}
-                        <span className="flex items-center rounded-full bg-red-200 p-1 justify-center">
+                        <span className="flex items-center justify-center">
                             <img src={naira} alt="naira" className="h-4" />
                         </span>
                     </div>
