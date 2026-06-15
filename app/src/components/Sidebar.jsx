@@ -10,9 +10,9 @@ function Sidebar() {
         { id: 'reports', name: 'Reports', icon: PieChart, path: '/reports'},
     ];
 
-    const baseLinkStyle = "flex items-center gap-1.5 px-8 py-3 w-full text-slate-800 text-sm transition-all";
-    const activeStyle = "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-sm shadow-emerald-800 shadow";
-    const inactiveStyle = "hover:text-gray-900 font-semibold font-medium";
+    const baseLinkStyle = "flex items-center gap-1.5 px-8 py-3 w-full text-sm transition-all";
+    const activeStyle = "bg-emerald-300 hover:bg-emerald-400 text-emerald-800 font-semibold rounded-xl shadow-emerald-50 shadow-sm";
+    const inactiveStyle = "hover:text-gray-900 font-semibold font-medium text-slate-800";
 
     return (
         <aside className='w-65 h-full p-5 flex-stack gap-6 select-none shrink-0'>
